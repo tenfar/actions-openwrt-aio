@@ -43,19 +43,25 @@ jobs:
         REPO_URL: https://github.com/coolsnowwolf/lede
         REPO_BRANCH: master
       run: git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
-       
+    
+    - name: Cache
+      uses: klever1988/cachewrtbuild@main
+      with:
+        ccache: 'true'
+        prefix: ${{ github.workspace }}/openwrt
+        
     - name: Update & Install feeds
       working-directory: ./openwrt
       run: |
         ./scripts/feeds update -a
-        ./scripts/feeds install -a   
+        ./scripts/feeds install -a
         
     - name: Import external feeds
       working-directory: ./openwrt
       run: |
         git clone https://github.com/kenzok8/small.git package/small
         git clone https://github.com/kenzok8/openwrt-packages.git package/kenzo
-       # git clone 其他github插件源码地址 package/文件夹名称  
+       # git clone 其他github插件源码地址 package/文件夹名称
         
     - name: Configuration Customization - Build_x86_64_aio
       env:
