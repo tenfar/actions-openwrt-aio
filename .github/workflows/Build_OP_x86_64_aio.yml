@@ -9,17 +9,17 @@ name: Openwrt_Build_x86_64_aio
 on: 
   release:
     types: [published]
-  # push:
-  #  branches: 
-  #    - master
-  # schedule:
-  #  - cron: 0 0 */11 * *
+  push:
+    branches: 
+      - master
+  schedule:
+    - cron: 0 0 */11 * *
   watch:
     types: [started]
 
 jobs:
   build_openwrt:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     if: github.event.repository.owner.id == github.event.sender.id
 
     steps:
